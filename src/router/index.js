@@ -17,7 +17,7 @@ const routes = [
       }
     },
     {
-      path: '/:locale(en|zh)',
+      path: '/:locale(en|tc|sc)',
       component: RouterView,
       children:[
         {

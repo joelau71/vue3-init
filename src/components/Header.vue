@@ -61,6 +61,7 @@
             <div class="pt-2 fixed">
               <ul
                 class="bg-gray-900 text-white bg-opacity-30 hidden group-hover:block w-28"
+                ref="languageSwitch"
               >
                 <li>
                   <div
@@ -70,17 +71,17 @@
                     Eng
                   </div>
                 </li>
-                <!--            <li>
-                  <router-link
-                    :to="{ name: name, params: { locale: 'zh' } }"
+                <li>
+                  <div
+                    v-on:click="changeLocale('tc')"
                     class="block px-2 py-1 hover:bg-blue-500 cursor-pointer"
                   >
                     繁體
-                  </router-link>
-                </li> -->
+                  </div>
+                </li>
                 <li>
                   <div
-                    v-on:click="changeLocale('zh')"
+                    v-on:click="changeLocale('sc')"
                     class="block px-2 py-1 hover:bg-blue-500 cursor-pointer"
                   >
                     简体
@@ -96,7 +97,7 @@
 </template>
 
 <script>
-import { computed, onMounted, ref } from "vue";
+import { ref } from "vue";
 import Container from "./Container.vue";
 import i18n from "../i18n";
 import { useRouter } from "vue-router";
@@ -111,8 +112,7 @@ export default {
     const language = ref(locale);
     const router = useRouter();
     const name = ref(null);
-
-    //computed(() => (name.value = router.currentRoute.value.name));
+    const languageSwitch = ref(null);
 
     const changeLocale = (locale) => {
       language.value = locale;
@@ -124,12 +124,17 @@ export default {
           locale: locale,
         },
       });
+      languageSwitch.value.classList.remove("group-hover:block");
+      setTimeout(() => {
+        languageSwitch.value.classList.add("group-hover:block");
+      }, 100);
     };
 
     return {
       name,
       language,
       changeLocale,
+      languageSwitch,
     };
   },
 };
