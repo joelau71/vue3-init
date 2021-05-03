@@ -70,14 +70,14 @@
                     Eng
                   </div>
                 </li>
-                <li>
-                  <div
-                    v-on:click="changeLocale('zh')"
+                <!--            <li>
+                  <router-link
+                    :to="{ name: name, params: { locale: 'zh' } }"
                     class="block px-2 py-1 hover:bg-blue-500 cursor-pointer"
                   >
                     繁體
-                  </div>
-                </li>
+                  </router-link>
+                </li> -->
                 <li>
                   <div
                     v-on:click="changeLocale('zh')"
@@ -96,10 +96,10 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import Container from "./Container.vue";
 import i18n from "../i18n";
-import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 
 export default {
   name: "Header",
@@ -109,16 +109,25 @@ export default {
   setup() {
     const locale = i18n.getLocale();
     const language = ref(locale);
-    const route = useRoute();
+    const router = useRouter();
+    const name = ref(null);
 
-    console.log(route);
+    //computed(() => (name.value = router.currentRoute.value.name));
 
     const changeLocale = (locale) => {
-      // i18n.setLocale(locale);
-      // route.push(to:)
+      language.value = locale;
+      console.log(router.currentRoute.value.name);
+      i18n.setLocale(locale);
+      router.push({
+        name: name.value,
+        params: {
+          locale: locale,
+        },
+      });
     };
 
     return {
+      name,
       language,
       changeLocale,
     };

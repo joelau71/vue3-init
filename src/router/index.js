@@ -54,7 +54,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const locale = to.params.locale;
   i18n.setLocale(locale);
-  console.log(to.params.locale, i18n.locale);
+  console.log(to.params.locale);
   next();
 });
 
