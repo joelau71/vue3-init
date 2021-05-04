@@ -12,7 +12,7 @@ const routes = [
       redirect: {
         "name": "Home",
         params:{
-          "locale" : "en"
+          "locale" : i18n.getLocale()
         }
       }
     },
